@@ -4,8 +4,8 @@
  A JS implementation of a binary search tree with the following methods:
 * buildTree
 * prettyPrint
-* insert
-* delete
+* insertValue
+* deleteValue
 * find
 * levelOrder
 * inorder
