@@ -44,6 +44,38 @@ describe("buildTree tests", () => {
     };
     expect(tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9])).toEqual(result);
   });
+  it("works with duplicate data", () => {
+    const result = {
+      value: 5,
+      left: {
+        value: 2,
+        left: singleRoot(1),
+        right: { value: 3, left: null, right: singleRoot(4) },
+      },
+      right: {
+        value: 7,
+        left: singleRoot(6),
+        right: { value: 8, left: null, right: singleRoot(9) },
+      },
+    };
+    expect(tree.buildTree([1, 2,2, 3, 4, 5, 6, 7, 8, 9])).toEqual(result);
+  });
+  it("works with unsorted data", () => {
+    const result = {
+      value: 5,
+      left: {
+        value: 2,
+        left: singleRoot(1),
+        right: { value: 3, left: null, right: singleRoot(4) },
+      },
+      right: {
+        value: 7,
+        left: singleRoot(6),
+        right: { value: 8, left: null, right: singleRoot(9) },
+      },
+    };
+    expect(tree.buildTree([1, 8, 7, 6, 5, 4, 3, 2, 9])).toEqual(result);
+  });
 });
 it("insertValue tests", () => {});
 it("deleteValue tests", () => {});

@@ -1,9 +1,14 @@
 export const Tree = () => {
   let _root = null;
   const buildTree = (pArray) => {
+    const removeDuplicates = (pArray) => [...new Set(pArray)];
+    pArray = removeDuplicates(pArray).sort((a, b) => a - b);
+
     const startIndex = 0;
     const endIndex = pArray.length - 1;
+
     _root = _buildTreeRecursively(pArray, startIndex, endIndex);
+
     return _root;
 
     function _buildTreeRecursively(pArray, pStartIndex, pEndIndex) {
@@ -18,11 +23,11 @@ export const Tree = () => {
     }
   };
 
-  const prettyPrint = (node, prefix = "", isLeft = true) => {
+  const prettyPrint = (node = _root, prefix = "", isLeft = true) => {
     if (node.right !== null) {
       prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
     }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
     if (node.left !== null) {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
