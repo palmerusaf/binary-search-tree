@@ -1,7 +1,33 @@
-export const Tree = (pArray) => {
+export const Tree = () => {
   let _root = null;
-  const buildTree = () => {};
-  const prettyPrint = () => {};
+  const buildTree = (pArray) => {
+    const startIndex = 0;
+    const endIndex = pArray.length - 1;
+    _root = _buildTreeRecursively(pArray, startIndex, endIndex);
+    return _root;
+
+    function _buildTreeRecursively(pArray, pStartIndex, pEndIndex) {
+      if (pStartIndex > pEndIndex) return null;
+
+      const mid = Math.floor((pStartIndex + pEndIndex) / 2);
+      const root = Node(pArray[mid]);
+      root.left = _buildTreeRecursively(pArray, pStartIndex, mid - 1);
+      root.right = _buildTreeRecursively(pArray, mid + 1, pEndIndex);
+
+      return root;
+    }
+  };
+
+  const prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
+
   const insertValue = () => {};
   const deleteValue = (pValue) => {};
   const find = () => {};
@@ -31,6 +57,6 @@ export const Tree = (pArray) => {
   };
 };
 
-export const Node = (data, leftSet, rightSet) => {
-  return { data, leftSet, rightSet };
+export const Node = (value, left = null, right = null) => {
+  return { value, left, right };
 };
