@@ -23,17 +23,20 @@ export const Tree = () => {
     }
   };
 
-  const prettyPrint = (node = _root, prefix = "", isLeft = true) => {
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
-  };
+  const getRoot = () => _root;
 
-  const insertValue = () => {};
+  const insertValue = (pValue, rootNode = _root) => {
+    //base case
+    console.log(rootNode);
+    if (rootNode === null) return Node(pValue);
+    if (rootNode.value === pValue) return rootNode;
+
+    if (rootNode.value < pValue)
+      rootNode.right = insertValue(pValue, rootNode.right);
+    if (rootNode.value > pValue)
+      rootNode.left = insertValue(pValue, rootNode.left);
+    return rootNode;
+  };
   const deleteValue = (pValue) => {};
   const find = () => {};
   const levelOrder = () => {};
@@ -47,7 +50,7 @@ export const Tree = () => {
 
   return {
     buildTree,
-    prettyPrint,
+    getRoot,
     insertValue,
     deleteValue,
     find,
