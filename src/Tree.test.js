@@ -143,8 +143,71 @@ describe("insertValue tests", () => {
     expect(tree.getRoot()).toEqual(result);
   });
 });
-it("deleteValue tests", () => {});
-it("find tests", () => {});
+describe.only("find tests", () => {
+  beforeEach(() => {
+    tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+  it("returns null if not found", () => {
+    expect(tree.find(-1)).toEqual(null);
+    expect(tree.find()).toEqual(null);
+    expect(tree.find("a")).toEqual(null);
+    expect(tree.find(20)).toEqual(null);
+  });
+  it("returns correct node", () => {
+    const result1 = {
+      value: 5,
+      left: {
+        value: 2,
+        left: singleRoot(1),
+        right: { value: 3, left: null, right: singleRoot(4) },
+      },
+      right: {
+        value: 7,
+        left: singleRoot(6),
+        right: { value: 8, left: null, right: singleRoot(9) },
+      },
+    };
+    expect(tree.find(5)).toEqual(result1);
+
+    const result2 = {
+      value: 2,
+      left: singleRoot(1),
+      right: { value: 3, left: null, right: singleRoot(4) },
+    };
+    expect(tree.find(2)).toEqual(result2);
+    expect(tree.find(1)).toEqual(singleRoot(1));
+    expect(tree.find(4)).toEqual(singleRoot(4));
+  });
+  it("doesn't mutate root", () => {
+    const result = {
+      value: 5,
+      left: {
+        value: 2,
+        left: singleRoot(1),
+        right: { value: 3, left: null, right: singleRoot(4) },
+      },
+      right: {
+        value: 7,
+        left: singleRoot(6),
+        right: { value: 8, left: null, right: singleRoot(9) },
+      },
+    };
+    tree.find(1);
+    tree.find(2);
+    tree.find(3);
+    tree.find(4);
+    tree.find(5);
+    tree.find(6);
+    tree.find(7);
+    tree.find(8);
+    tree.find(9);
+    tree.find("3");
+    tree.find(-1);
+    tree.find(20);
+    tree.find();
+    expect(tree.getRoot()).toEqual(result);
+  });
+});
 it("levelOrder tests", () => {});
 it("inorder tests", () => {});
 it("preorder tests", () => {});

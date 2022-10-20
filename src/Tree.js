@@ -38,7 +38,16 @@ export const Tree = () => {
     return rootNode;
   };
   const deleteValue = (pValue) => {};
-  const find = () => {};
+
+  const find = (pValue, rootNode = _root) => {
+    if (rootNode === null) return null;
+    if (rootNode.value === pValue) return rootNode;
+
+    if (rootNode.value < pValue) return find(pValue, rootNode.right);
+    if (rootNode.value > pValue) return find(pValue, rootNode.left);
+    return null
+  };
+
   const levelOrder = () => {};
   const inorder = () => {};
   const preorder = () => {};
