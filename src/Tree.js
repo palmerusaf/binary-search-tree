@@ -70,7 +70,22 @@ export const Tree = () => {
     return nodeValues;
   };
 
-  const inorder = () => {};
+  const inorder = (cb = null) => {
+    if (_root === null) return null;
+
+    const nodeValues = [];
+    traverseRecursively(cb, _root);
+    return nodeValues;
+
+    function traverseRecursively(cb, rootNode) {
+      if (rootNode === null) return null;
+
+      traverseRecursively(cb, rootNode.left);
+      if (cb !== null) cb(rootNode);
+      nodeValues.push(rootNode.value);
+      traverseRecursively(cb, rootNode.right);
+    }
+  };
   const preorder = () => {};
   const postorder = () => {};
   const height = (pNode) => {
