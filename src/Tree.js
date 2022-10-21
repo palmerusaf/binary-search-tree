@@ -27,7 +27,6 @@ export const Tree = () => {
 
   const insertValue = (pValue, rootNode = _root) => {
     //base case
-    console.log(rootNode);
     if (rootNode === null) return Node(pValue);
     if (rootNode.value === pValue) return rootNode;
 
@@ -37,7 +36,11 @@ export const Tree = () => {
       rootNode.left = insertValue(pValue, rootNode.left);
     return rootNode;
   };
-  const deleteValue = (pValue) => {};
+
+  const deleteValue = (pValue) => {
+    const nodeToDelete = find(pValue);
+    if (nodeToDelete === null) return;
+  };
 
   const find = (pValue, rootNode = _root) => {
     if (rootNode === null) return null;
@@ -45,14 +48,20 @@ export const Tree = () => {
 
     if (rootNode.value < pValue) return find(pValue, rootNode.right);
     if (rootNode.value > pValue) return find(pValue, rootNode.left);
-    return null
+    return null;
   };
 
   const levelOrder = () => {};
   const inorder = () => {};
   const preorder = () => {};
   const postorder = () => {};
-  const height = () => {};
+  const height = (pNode) => {
+    if (pNode === null) return 0;
+
+    if (pNode.left !== null) return 1 + height(pNode.left);
+    if (pNode.right !== null) return 1 + height(pNode.right);
+    return 0;
+  };
   const depth = () => {};
   const isBalanced = () => {};
   const rebalance = () => {};
