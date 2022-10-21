@@ -51,7 +51,25 @@ export const Tree = () => {
     return null;
   };
 
-  const levelOrder = () => {};
+  const levelOrder = (cb = null) => {
+    if (_root === null) return null;
+
+    const queuedNodes = [_root];
+    const nodeValues = [];
+
+    while (queuedNodes.length !== 0) {
+      const dequeuedNode = queuedNodes.shift();
+      if (cb !== null) cb(dequeuedNode);
+
+      nodeValues.push(dequeuedNode.value);
+
+      if (dequeuedNode.left !== null) queuedNodes.push(dequeuedNode.left);
+      if (dequeuedNode.right !== null) queuedNodes.push(dequeuedNode.right);
+    }
+
+    return nodeValues;
+  };
+
   const inorder = () => {};
   const preorder = () => {};
   const postorder = () => {};
