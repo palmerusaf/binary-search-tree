@@ -388,7 +388,55 @@ describe("height tests", () => {
     expect(tree.height(node)).toEqual(4);
   });
 });
-it("depth tests", () => {});
+describe("depth tests", () => {
+  beforeEach(() => {
+    tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+  it("return zero for root", () => {
+    const node = {
+      value: 5,
+      left: {
+        value: 2,
+        left: Node(1),
+        right: { value: 3, left: null, right: Node(4) },
+      },
+      right: {
+        value: 7,
+        left: Node(6),
+        right: { value: 8, left: null, right: Node(9) },
+      },
+    };
+    expect(tree.depth(node)).toEqual(0);
+  });
+  it("depth one", () => {
+    const node = {
+      value: 2,
+      left: Node(1),
+      right: { value: 3, left: null, right: Node(4) },
+    };
+    expect(tree.depth(node)).toEqual(1);
+  });
+  it("depth two", () => {
+    const node = Node(1);
+    expect(tree.depth(node)).toEqual(2);
+  });
+  it("depth three", () => {
+    const node = Node(9);
+    expect(tree.depth(node)).toEqual(3);
+  });
+  it("return null if node not in tree", () => {
+    const node = Node(20);
+    expect(tree.depth(node)).toEqual(null);
+  });
+  it("speed check", () => {
+    const bigTree = Tree();
+    const bigArray = [];
+    for (let i = 1; i <= 1000; i++) bigArray.push(i);
+    bigTree.buildTree(bigArray);
+    const node = Node(1000);
+    expect(bigTree.depth(node)).toEqual(9);
+  });
+});
 it("isBalanced tests", () => {});
 it("rebalance tests", () => {});
 
@@ -397,6 +445,5 @@ it("rebalance tests", () => {});
 // implement inorder method
 // implement preorder method
 // implement postorder method
-// implement depth method
 // implement isBalanced method
 // implement rebalance method

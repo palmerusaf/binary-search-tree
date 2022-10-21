@@ -62,7 +62,13 @@ export const Tree = () => {
     if (pNode.right !== null) return 1 + height(pNode.right);
     return 0;
   };
-  const depth = () => {};
+  const depth = (pNode, rootNode = _root) => {
+    if (find(pNode.value) === null) return null;
+    if (pNode.value == rootNode.value) return 0;
+
+    if (rootNode.value < pNode.value) return 1 + depth(pNode, rootNode.right);
+    if (rootNode.value > pNode.value) return 1 + depth(pNode, rootNode.left);
+  };
   const isBalanced = () => {};
   const rebalance = () => {};
 
