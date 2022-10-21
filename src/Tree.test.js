@@ -397,7 +397,33 @@ describe("inorder tests", () => {
     expect(addOneArray).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10]);
   });
 });
-it("preorder tests", () => {});
+describe("preorder tests", () => {
+  it("returns null for null tree", () => {
+    expect(tree.preorder()).toEqual(null);
+  });
+  it("returns correct for three node tree", () => {
+    tree.buildTree([1, 2, 3]);
+    expect(tree.preorder()).toEqual([2, 1, 3]);
+  });
+  it("returns correct for nine node tree", () => {
+    tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(tree.preorder()).toEqual([5, 2, 1, 3, 4, 7, 6, 8, 9]);
+  });
+  it("callback works for three node tree", () => {
+    const addOneArray = [];
+    const addOne = (node) => addOneArray.push(node.value + 1);
+    tree.buildTree([1, 2, 3]);
+    tree.preorder(addOne);
+    expect(addOneArray).toEqual([3, 2, 4]);
+  });
+  it("callback works for nine node tree", () => {
+    const addOneArray = [];
+    const addOne = (node) => addOneArray.push(node.value + 1);
+    tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    tree.preorder(addOne);
+    expect(addOneArray).toEqual([6, 3, 2, 4, 5, 8, 7, 9, 10]);
+  });
+});
 it("postorder tests", () => {});
 describe("height tests", () => {
   it("returns zero for null tree", () => {
@@ -492,7 +518,6 @@ describe("depth tests", () => {
 it("isBalanced tests", () => {});
 it("rebalance tests", () => {});
 // implement deleteValue method
-// implement preorder method
 // implement postorder method
 // implement isBalanced method
 // implement rebalance method

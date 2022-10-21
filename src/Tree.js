@@ -86,7 +86,23 @@ export const Tree = () => {
       traverseRecursively(cb, rootNode.right);
     }
   };
-  const preorder = () => {};
+  const preorder = (cb = null) => {
+    if (_root === null) return null;
+
+    const nodeValues = [];
+    traverseRecursively(cb, _root);
+    return nodeValues;
+
+    function traverseRecursively(cb, rootNode) {
+      if (rootNode === null) return null;
+
+      if (cb !== null) cb(rootNode);
+      nodeValues.push(rootNode.value);
+      traverseRecursively(cb, rootNode.left);
+      traverseRecursively(cb, rootNode.right);
+    }
+  };
+
   const postorder = () => {};
   const height = (pNode) => {
     if (pNode === null) return 0;
