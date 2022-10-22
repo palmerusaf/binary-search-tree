@@ -70,55 +70,47 @@ export const Tree = () => {
     return nodeValues;
   };
 
-  const inorder = (cb = null) => {
+  const _travelTree = (travelSteps, userCb) => {
     if (_root === null) return null;
 
     const nodeValues = [];
-    traverseRecursively(cb, _root);
+    const travelOrder = travelWith(travelSteps, nodeValues);
+    travelOrder(userCb, _root);
     return nodeValues;
 
-    function traverseRecursively(cb, rootNode) {
-      if (rootNode === null) return null;
+    function travelWith(travelSteps, nodeValues) {
+      return function travelRecur(userCb, rootNode) {
+        const Actions = {
+          right: (userCb, rootNode) => travelRecur(userCb, rootNode.right),
+          left: (userCb, rootNode) => travelRecur(userCb, rootNode.left),
+          root: (userCb, rootNode) => {
+            if (userCb !== null) userCb(rootNode);
+            nodeValues.push(rootNode.value);
+          },
+        };
 
-      traverseRecursively(cb, rootNode.left);
-      if (cb !== null) cb(rootNode);
-      nodeValues.push(rootNode.value);
-      traverseRecursively(cb, rootNode.right);
+        if (rootNode === null) return null;
+
+        travelSteps.forEach((step) => {
+          Actions[step](userCb, rootNode);
+        });
+      };
     }
   };
 
-  const preorder = (cb = null) => {
-    if (_root === null) return null;
-
-    const nodeValues = [];
-    traverseRecursively(cb, _root);
-    return nodeValues;
-
-    function traverseRecursively(cb, rootNode) {
-      if (rootNode === null) return null;
-
-      if (cb !== null) cb(rootNode);
-      nodeValues.push(rootNode.value);
-      traverseRecursively(cb, rootNode.left);
-      traverseRecursively(cb, rootNode.right);
-    }
+  const inorder = (userCb = null) => {
+    const travelSteps = ["left", "root", "right"];
+    return _travelTree(travelSteps, userCb);
   };
 
-  const postorder = (cb = null) => {
-    if (_root === null) return null;
+  const preorder = (userCb = null) => {
+    const travelSteps = ["root", "left", "right"];
+    return _travelTree(travelSteps, userCb);
+  };
 
-    const nodeValues = [];
-    traverseRecursively(cb, _root);
-    return nodeValues;
-
-    function traverseRecursively(cb, rootNode) {
-      if (rootNode === null) return null;
-
-      traverseRecursively(cb, rootNode.left);
-      traverseRecursively(cb, rootNode.right);
-      if (cb !== null) cb(rootNode);
-      nodeValues.push(rootNode.value);
-    }
+  const postorder = (userCb = null) => {
+    const travelSteps = ["left", "right", "root"];
+    return _travelTree(travelSteps, userCb);
   };
 
   const height = (pNode) => {
