@@ -140,11 +140,11 @@ describe("insertValue tests", () => {
     expect(tree.getRoot()).toEqual(result);
   });
 });
-describe.skip("deleteValue tests", () => {
+describe("deleteValue tests", () => {
   beforeEach(() => {
     tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
-  it.only("does nothing when value not found", () => {
+  it("does nothing when value not found", () => {
     const result = {
       value: 5,
       left: {
@@ -161,7 +161,7 @@ describe.skip("deleteValue tests", () => {
     tree.deleteValue(20);
     expect(tree.getRoot()).toEqual(result);
   });
-  it.only("works when node is leaf", () => {
+  it("works when node is leaf", () => {
     const result1 = {
       value: 5,
       left: {
@@ -543,6 +543,5 @@ describe("depth tests", () => {
 });
 it("isBalanced tests", () => {});
 it("rebalance tests", () => {});
-// implement deleteValue method
 // implement isBalanced method
 // implement rebalance method

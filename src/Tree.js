@@ -38,8 +38,64 @@ export const Tree = () => {
   };
 
   const deleteValue = (pValue) => {
-    const nodeToDelete = find(pValue);
-    if (nodeToDelete === null) return;
+    if (_root === null) return;
+    const nodeToDel = find(pValue);
+    if (nodeToDel === null) return;
+
+    if (isLeaf(nodeToDel)) setNull(nodeToDel);
+    else if (hasSingleChild(nodeToDel)) setNodeToChild(nodeToDel);
+    else if (hasTwoChildren(nodeToDel)) replaceWithNextBigger(nodeToDel);
+
+    function isLeaf(pNode) {
+      return pNode.left === null && pNode.right === null;
+    }
+    function hasSingleChild(pNode) {
+      return (
+        (pNode.left !== null || pNode.right !== null) &&
+        !(pNode.left !== null && pNode.right !== null)
+      );
+    }
+    function getParent(pNode) {
+      let parentNode = null;
+      inorder((candidateNode) => {
+        if (parentNode !== null) return;
+        if (candidateNode.left === pNode || candidateNode.right === pNode)
+          parentNode = candidateNode;
+      });
+      return parentNode;
+    }
+    function setNull(pNode) {
+      if (pNode === _root) return (_root = null);
+      const parentNode = getParent(pNode);
+      if (parentNode.left === pNode) parentNode.left = null;
+      else parentNode.right = null;
+    }
+    function setNodeToChild(pNode) {
+      if (pNode === _root) return (_root = pNode.left || pNode.right);
+      const parentNode = getParent(pNode);
+      if (parentNode.left === pNode)
+        parentNode.left = pNode.left || pNode.right;
+      else parentNode.right = pNode.left || pNode.right;
+    }
+    function hasTwoChildren(pNode) {
+      return pNode.left !== null && pNode.right !== null;
+    }
+    function replaceWithNextBigger(pNode) {
+      const nextBigger = getNextBigger(pNode);
+      pNode.value = nextBigger.value;
+
+      if (isLeaf(nextBigger)) setNull(nextBigger);
+      else setNodeToChild(nextBigger);
+
+      function getNextBigger(pNode) {
+        let nextBigger = null;
+        inorder((candidateNode) => {
+          if (nextBigger !== null) return;
+          if (candidateNode.value > pNode.value) nextBigger = candidateNode;
+        });
+        return nextBigger;
+      }
+    }
   };
 
   const find = (pValue, rootNode = _root) => {
@@ -98,10 +154,10 @@ export const Tree = () => {
     }
   };
 
-  const inorder = (userCb = null) => {
+  function inorder(userCb = null) {
     const travelSteps = ["left", "root", "right"];
     return _travelTree(travelSteps, userCb);
-  };
+  }
 
   const preorder = (userCb = null) => {
     const travelSteps = ["root", "left", "right"];
