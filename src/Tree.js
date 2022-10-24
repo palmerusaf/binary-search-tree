@@ -196,7 +196,7 @@ export const Tree = () => {
     }
   };
 
-  const rebalance = () => {};
+  const rebalance = () => buildTree(inorder());
 
   return {
     buildTree,

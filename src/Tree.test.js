@@ -562,5 +562,12 @@ describe("isBalanced tests", () => {
     expect(tree.isBalanced()).toEqual(true);
   });
 });
-it("rebalance tests", () => {});
-// implement rebalance method
+it("rebalance tests", () => {
+  tree.buildTree([1, 2, 3]);
+  tree.insertValue(4);
+  tree.insertValue(5);
+  tree.insertValue(6);
+  tree.insertValue(9);
+  tree.rebalance();
+  expect(tree.isBalanced()).toEqual(true);
+});
