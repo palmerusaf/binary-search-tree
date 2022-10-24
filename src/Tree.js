@@ -176,6 +176,7 @@ export const Tree = () => {
     if (pNode.right !== null) return 1 + height(pNode.right);
     return 0;
   };
+
   const depth = (pNode, rootNode = _root) => {
     if (find(pNode.value) === null) return null;
     if (pNode.value == rootNode.value) return 0;
@@ -183,7 +184,18 @@ export const Tree = () => {
     if (rootNode.value < pNode.value) return 1 + depth(pNode, rootNode.right);
     if (rootNode.value > pNode.value) return 1 + depth(pNode, rootNode.left);
   };
-  const isBalanced = () => {};
+
+  const isBalanced = (rootNode = _root) => {
+    if (height(rootNode) === 0) return true;
+    if (heightDiff(rootNode.left, rootNode.right) > 1) return false;
+
+    return isBalanced(rootNode.left) && isBalanced(rootNode.right);
+
+    function heightDiff(pLeft, pRight) {
+      return Math.abs(height(pLeft) - height(pRight));
+    }
+  };
+
   const rebalance = () => {};
 
   return {

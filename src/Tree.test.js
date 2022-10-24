@@ -541,7 +541,26 @@ describe("depth tests", () => {
     expect(bigTree.depth(node)).toEqual(9);
   });
 });
-it("isBalanced tests", () => {});
+describe("isBalanced tests", () => {
+  it("returns false for unbalanced tree", () => {
+    tree.buildTree([1, 2, 3]);
+    tree.insertValue(4);
+    tree.insertValue(5);
+    tree.insertValue(6);
+    tree.insertValue(9);
+    expect(tree.isBalanced()).toEqual(false);
+  });
+  it("returns true for balanced tree", () => {
+    tree.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(tree.isBalanced()).toEqual(true);
+  });
+  it("true for null", () => {
+    expect(tree.isBalanced()).toEqual(true);
+  });
+  it("true for single node", () => {
+    tree.buildTree([1]);
+    expect(tree.isBalanced()).toEqual(true);
+  });
+});
 it("rebalance tests", () => {});
-// implement isBalanced method
 // implement rebalance method
